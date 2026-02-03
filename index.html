@@ -35,6 +35,16 @@
             max-width: 500px;
             width: 100%;
             border: 2px solid rgba(255, 255, 255, 0.3);
+            opacity: 0;
+            transform: scale(0.9);
+            animation: containerAppear 0.8s ease-out 1s forwards;
+        }
+
+        @keyframes containerAppear {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         h1 {
