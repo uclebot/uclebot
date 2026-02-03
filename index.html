@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UcleBook Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #8B4513;
+            background-image: url('UcleBot.jpg');
+            background-size: contain;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.70);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            max-width: 500px;
+            width: 100%;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: 'Georgia', serif;
+            transition: border-color 0.3s;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            font-family: 'Georgia', serif;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .result {
+            margin-top: 30px;
+            padding: 25px;
+            background: rgba(248, 249, 250, 0.75);
+            backdrop-filter: blur(5px);
+            border-radius: 12px;
+            text-align: center;
+            display: none;
+            border-left: 5px solid #667eea;
+        }
+
+        .result.show {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .form-hidden {
+            display: none;
+        }
+
+        .container.compact {
+            max-width: 400px;
+            padding: 30px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .result h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .title-result {
+            font-size: 24px;
+            color: #333;
+            font-style: italic;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .reset-btn {
+            margin-top: 15px;
+            padding: 10px;
+            font-size: 14px;
+            background: #6c757d;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .title-result {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📚 UcleBook Generator</h1>
+        <p class="subtitle">Descubre tu próxima obra maestra (o desastre)</p>
+        
+        <form id="titleForm">
+            <div class="form-group">
+                <label for="month">¿En qué mes naciste?</label>
+                <select id="month" required>
+                    <option value="">Selecciona un mes</option>
+                    <option value="0">Enero</option>
+                    <option value="1">Febrero</option>
+                    <option value="2">Marzo</option>
+                    <option value="3">Abril</option>
+                    <option value="4">Mayo</option>
+                    <option value="5">Junio</option>
+                    <option value="6">Julio</option>
+                    <option value="7">Agosto</option>
+                    <option value="8">Septiembre</option>
+                    <option value="9">Octubre</option>
+                    <option value="10">Noviembre</option>
+                    <option value="11">Diciembre</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="color">¿Cuál es tu color favorito?</label>
+                <select id="color" required>
+                    <option value="">Selecciona un color</option>
+                    <option value="0">Rojo</option>
+                    <option value="1">Azul</option>
+                    <option value="2">Amarillo</option>
+                    <option value="3">Verde</option>
+                    <option value="4">Naranja</option>
+                    <option value="5">Morado</option>
+                    <option value="6">Rosa</option>
+                    <option value="7">Negro</option>
+                    <option value="8">Blanco</option>
+                    <option value="9">Marrón</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="digit">Último dígito de tu número de móvil</label>
+                <select id="digit" required>
+                    <option value="">Selecciona un dígito</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                </select>
+            </div>
+
+            <button type="submit">✨ Generar mi título</button>
+        </form>
+
+        <div id="result" class="result">
+            <h2>Tu título literario es:</h2>
+            <div class="title-result" id="titleText"></div>
+            <button class="reset-btn" onclick="resetForm()">Generar otro título</button>
+        </div>
+    </div>
+
+    <script>
+        // Listas de palabras con toque humorístico
+        const firstWords = [
+            "La aldea",           // Enero
+            "El hostal",          // Febrero
+            "El refugio",         // Marzo
+            "La taberna",         // Abril
+            "El país",            // Mayo
+            "La mansión",         // Junio
+            "El barrio",          // Julio
+            "El valle",           // Agosto
+            "El pueblo",          // Septiembre
+            "La comarca",         // Octubre
+            "El distrito",        // Noviembre
+            "La provincia"        // Diciembre
+        ];
+
+        const secondWords = [
+            "de los marineros",      // Rojo
+            "de los amaneceres",     // Azul
+            "de los vientos",        // Amarillo
+            "de las muchachas",      // Verde
+            "de los suspiros",       // Naranja
+            "de las sombras",        // Morado
+            "de los cerezos",        // Rosa
+            "de los cuervos",        // Negro
+            "de las nieves",         // Blanco
+            "de los caminos"         // Marrón
+        ];
+
+        const thirdWords = [
+            "melancólicos",      // 0
+            "traicionados",      // 1
+            "discretos",         // 2
+            "olvidados",         // 3
+            "dolientes",         // 4
+            "valientes",         // 5
+            "imprudentes",       // 6
+            "perdidos",          // 7
+            "sonrientes",        // 8
+            "dormidos"           // 9
+        ];
+
+        document.getElementById('titleForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const month = document.getElementById('month').value;
+            const color = document.getElementById('color').value;
+            const digit = document.getElementById('digit').value;
+
+            const title = `${firstWords[month]} ${secondWords[color]} ${thirdWords[digit]}`;
+            
+            document.getElementById('titleText').textContent = title;
+            document.getElementById('result').classList.add('show');
+            
+            // Hide form and make container compact
+            document.getElementById('titleForm').classList.add('form-hidden');
+            document.querySelector('.subtitle').classList.add('form-hidden');
+            document.querySelector('.container').classList.add('compact');
+            
+            // Scroll suave al resultado en móviles
+            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        });
+
+        function resetForm() {
+            document.getElementById('titleForm').reset();
+            document.getElementById('result').classList.remove('show');
+            
+            // Show form again and restore container size
+            document.getElementById('titleForm').classList.remove('form-hidden');
+            document.querySelector('.subtitle').classList.remove('form-hidden');
+            document.querySelector('.container').classList.remove('compact');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
