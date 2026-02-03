@@ -125,7 +125,6 @@
 
         .result.show {
             display: block;
-            animation: fadeIn 0.5s;
         }
 
         .form-hidden {
@@ -137,14 +136,24 @@
             padding: 30px;
         }
 
+        .container.hidden {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.3s ease-out, transform 0.3s ease-out;
+        }
+
+        .container.reappear {
+            animation: containerAppear 0.8s ease-out forwards;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(-10px);
+                transform: scale(0.9);
             }
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: scale(1);
             }
         }
 
@@ -305,26 +314,51 @@
 
             const title = `${firstWords[month]} ${secondWords[color]} ${thirdWords[digit]}`;
             
-            document.getElementById('titleText').textContent = title;
-            document.getElementById('result').classList.add('show');
+            // Hide container completely
+            const container = document.querySelector('.container');
+            container.classList.add('hidden');
             
-            // Hide form and make container compact
-            document.getElementById('titleForm').classList.add('form-hidden');
-            document.querySelector('.subtitle').classList.add('form-hidden');
-            document.querySelector('.container').classList.add('compact');
-            
-            // Scroll suave al resultado en móviles
-            document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            // After container disappears, wait 1 second showing background, then show result
+            setTimeout(() => {
+                // Hide form and subtitle
+                document.getElementById('titleForm').classList.add('form-hidden');
+                document.querySelector('.subtitle').classList.add('form-hidden');
+                
+                // Show result content
+                document.getElementById('titleText').textContent = title;
+                document.getElementById('result').classList.add('show');
+                
+                // Make container compact and reappear
+                container.classList.add('compact');
+                container.classList.remove('hidden');
+                container.classList.add('reappear');
+                
+                // Remove reappear class after animation completes
+                setTimeout(() => {
+                    container.classList.remove('reappear');
+                }, 800);
+            }, 1000);
         });
 
         function resetForm() {
             document.getElementById('titleForm').reset();
             document.getElementById('result').classList.remove('show');
             
-            // Show form again and restore container size
-            document.getElementById('titleForm').classList.remove('form-hidden');
-            document.querySelector('.subtitle').classList.remove('form-hidden');
-            document.querySelector('.container').classList.remove('compact');
+            const container = document.querySelector('.container');
+            container.classList.add('hidden');
+            
+            setTimeout(() => {
+                // Show form again and restore container size
+                document.getElementById('titleForm').classList.remove('form-hidden');
+                document.querySelector('.subtitle').classList.remove('form-hidden');
+                container.classList.remove('compact');
+                container.classList.remove('hidden');
+                container.classList.add('reappear');
+                
+                setTimeout(() => {
+                    container.classList.remove('reappear');
+                }, 800);
+            }, 300);
             
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
